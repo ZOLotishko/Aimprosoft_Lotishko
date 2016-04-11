@@ -6,7 +6,7 @@ import test.dao.impl.EmployeeDAOImpl;
 import test.entity.Employee;
 
 /**
- * Created by Sveta on 10.04.2016.
+ * Created by
  */
 public class CheckWithEmployee implements CheckWithCheck.SimpleCheck {
     @Override
@@ -14,8 +14,12 @@ public class CheckWithEmployee implements CheckWithCheck.SimpleCheck {
 
         try {
             EmployeeDAO employeeDAO = new EmployeeDAOImpl();
-            return employeeDAO.checkEmployeeEmail(((Employee) validatedObject).getEmail(), ((Employee) validatedObject).getId() );
-       } catch (Exception ignored) {}
+            Integer id = ((Employee) validatedObject).getId();
+            String email = ((Employee) validatedObject).getEmail();
+//            return employeeDAO.checkEmployeeEmail(((Employee) validatedObject).getEmail(), ((Employee) validatedObject).getId() );
+            return employeeDAO.checkEmail(email, id);
+
+       } catch (Exception e) {}
         return false;
     }
 }

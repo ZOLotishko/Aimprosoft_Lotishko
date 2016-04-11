@@ -18,21 +18,20 @@
     </thead>
     <tbody>
     <c:forEach var="dep" items="${dep}">
-    <tr>
-        <td><c:out value="${dep.id}" /></td>
-        <td><c:out value="${dep.name}" /></td>
+        <tr>
+            <td><c:out value="${dep.id}" /></td>
+            <td><c:out value="${dep.name}" /></td>
 
-        <td><input type=button onClick="location.href='/addDepartments?id=<c:out value="${dep.id}"/>'" value='Edit'></td>
-        <td>
-            <form method="POST" action="/deleteDepartment">
-                <input type="submit" name="deleteForm" value="Delete"> <input type="hidden" name="delete" value="${dep.id}">
-            </form>
-        </td>
-        <td><input type=button onClick="location.href='/listEmployee?department_id=<c:out value="${dep.id}"/>'" value='List Employee'></td>
-    </tr>
+            <td><a href="/addDepartment?department_id=${dep.id}">Update</a></td>
+            <td><a href="/deleteDepartment?department_id=${dep.id}">Delete</a></td>
+            <td><a href="/listEmployees?department_id=${dep.id}">Show all employees</a></td>
+
+        </tr>
     </c:forEach>
     </tbody>
 </table>
-<input type=button onClick="location.href='/addDepartments'" value='Add Departments'>
+<form method="POST" action='addDepartment'>
+    <input type="submit" value="Add Department">
+</form>
 </body>
 </html>

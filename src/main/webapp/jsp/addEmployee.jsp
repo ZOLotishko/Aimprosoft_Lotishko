@@ -6,7 +6,7 @@
 </head>
 <body>
 <center>
-    <form method="POST" name='formEmployee' action="addEmployees">
+    <form method="POST" name='formEmployee' action="/addEmployees">
         <h2>Add New Employee</h2>
         <table>
             <tr>
@@ -27,24 +27,29 @@
                 <td><label for="email">Email</label></td>
             </tr>
             <tr>
-                <td><input type="text" name="email" id="email" <c:out value="${emp.email}"/> /> <span class="error"><c:out value="${error.email}" /></span></td>
+                <td><input type="text" name="email" id="email" value=<c:out value="${emp.email}"/> /> <span class="error"><c:out value="${error.email}" /></span></td>
             </tr>
             <tr>
                 <td><label for="date">BornDay: YYYY-MM-DD </label></td>
             </tr>
             <tr>
-                <td><input type="text" name="date" id="date" <c:out value="${emp.date}"/> /> <span class="error"><c:out value="${error.date}" /></span></td>
+                <td><input type="text" name="date" id="date" value=<c:out value="${emp.date}"/> /> <span class="error"><c:out value="${error.date}" /></span></td>
             </tr>
             <tr>
                 <td><label for="salary">Salary</label></td>
             </tr>
             <tr>
-                <td><input type="text" name="salary" id="salary" <c:out value="${emp.salary}"/> /> <span class="error"><c:out value="${error.salary}" /></span></td>
+                <td><input type="text" name="salary" id="salary" value=<c:out value="${emp.salary}"/> /> <span class="error"><c:out value="${error.salary}" /></span></td>
             </tr>
 
+
+
         </table>
-        <input type="hidden" readonly name="department_id" value="<c:out value="${department_id}"/>" /> <br>
-        <br> <input type="submit" value="Add Employee">
+        <span><input type="hidden" name="department_id"
+        value="<c:out value="${param['department_id'] eq null ? id_dep : param['department_id']}"/>"/></span>
+
+        </span>
+        <span><input type="submit" value="Add Employee"></span>
     </form>
 </center>
 </body>

@@ -2,7 +2,10 @@ package test.service.impl;
 
 import test.dao.DaoFactory;
 import test.dao.DepartmentDAO;
+import test.dao.EmployeeDAO;
+import test.dao.impl.EmployeeDAOImpl;
 import test.entity.Department;
+import test.entity.Employee;
 import test.exeption.ErrorException;
 import test.exeption.ValidationException;
 import test.service.DepartmentService;
@@ -18,6 +21,7 @@ public class DepartmentServiceImpl implements DepartmentService{
 
     private MyValidation myValidation = new MyValidation();
     private DepartmentDAO departmentDAO = DaoFactory.getDepartmentDAO();
+    private EmployeeDAO employeeDAO = new EmployeeDAOImpl();
 
     @Override
     public void create(Department department) throws ValidationException, ErrorException {
@@ -47,8 +51,16 @@ public class DepartmentServiceImpl implements DepartmentService{
 
     @Override
     public void delete(Integer id) throws ErrorException{
-        departmentDAO.deleteDepartment(id);
 
+        List<Employee> employees = employeeDAO.readEmployeeByIDDepartment(id);
+        if(!employees.isEmpty()){
+            for(Employee emp : employees){
+                employeeDAO.deleteEmployee(emp.getId());
+            }
+            departmentDAO.deleteDepartment(id);
+        }else {
+            departmentDAO.deleteDepartment(id);
+        }
     }
 
     @Override

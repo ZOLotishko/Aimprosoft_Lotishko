@@ -1,13 +1,13 @@
 package test.controller;
 
-import test.controller.dep.AddDepartmnetsController;
-import test.controller.dep.DeleteDepartmnetsController;
-import test.controller.dep.ShowAddListController;
-import test.controller.dep.ShowAllDepartmnetsController;
-import test.controller.empl.AddEmployeeController;
+import test.controller.dep.DepartmentsControllerAdd;
+import test.controller.dep.DepartmentsControllerDelete;
+import test.controller.dep.DepartmentsControllerShowAddList;
+import test.controller.dep.DepartmentsControllerShowAll;
+import test.controller.empl.EmployeeControllerAdd;
 import test.controller.empl.EmployeeControllerDelete;
-import test.controller.empl.ShowEmployeeAddListController;
-import test.controller.empl.ShowListEmployeeController;
+import test.controller.empl.EmployeeControllerShowAddList;
+import test.controller.empl.EmployeeControllerShowList;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,17 +19,17 @@ public class ControllerFactory {
 
     private Map<String, InternalController> controllerMap = new HashMap<String, InternalController>();
 
-    private InternalController defaultController = new ShowAllDepartmnetsController();
+    private InternalController defaultController = new DepartmentsControllerShowAll();
 
 
     {
         controllerMap.put("/", defaultController);
-        controllerMap.put("/deleteDepartment", new DeleteDepartmnetsController());
-        controllerMap.put("/showAddList", new AddDepartmnetsController());
-        controllerMap.put("/addDepartments", new ShowAddListController());
-        controllerMap.put("/listEmployee", new ShowListEmployeeController());
-        controllerMap.put("/addEmployee", new ShowEmployeeAddListController());
-        controllerMap.put("/addEmployees", new AddEmployeeController());
+        controllerMap.put("/deleteDepartment", new DepartmentsControllerDelete());
+        controllerMap.put("/showAddList", new DepartmentsControllerAdd());
+        controllerMap.put("/addDepartment", new DepartmentsControllerShowAddList());
+        controllerMap.put("/listEmployees", new EmployeeControllerShowList());
+        controllerMap.put("/addEmployee", new EmployeeControllerShowAddList());
+        controllerMap.put("/addEmployees", new EmployeeControllerAdd());
         controllerMap.put("/deleteEmployee", new EmployeeControllerDelete());
 
     }

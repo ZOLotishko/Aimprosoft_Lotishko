@@ -31,12 +31,8 @@
             <td><c:out value="${emp.date}" /></td>
             <td><c:out value="${emp.salary}"></c:out>
             <td><c:out value="${department_id}" /></td>
-            <td>
-                <form method="POST" action="/deleteEmployee">
-                    <input type="submit" name="deleteForm" value="Delete Employee"> <input type="hidden" name="delete" value="${emp.id}">
-                </form>
-            </td>
-            <td><input type=button onClick="location.href='/addEmployee?employees_id=<c:out value="${emp.id}" />'" value='Update'></td>
+            <td><a href="/deleteEmployee?id=${emp.id}&department_id=${department_id}">Delete</a></td>
+            <td><a href="/addEmployee?id=${emp.id}&department_id=${department_id}">Update</a></td>
         </tr>
     </c:forEach>
     </tbody>

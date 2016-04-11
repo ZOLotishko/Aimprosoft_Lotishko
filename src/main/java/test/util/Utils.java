@@ -33,4 +33,15 @@ public class Utils {
         return  newSalary;
     }
 
+    public static Integer parseStringToInteger(String s){
+        Integer newI;
+        try{
+            newI = Integer.parseInt(s);
+        }
+        catch (NumberFormatException e){
+            newI = null;
+        }
+        return newI;
+    }
+
 }

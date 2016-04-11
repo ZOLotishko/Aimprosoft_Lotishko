@@ -7,7 +7,7 @@ import test.entity.Department;
 
 
 /**
- * Created by Sveta on 10.04.2016.
+ * Created
  */
 public class CheckWithDepartment implements CheckWithCheck.SimpleCheck {
 
@@ -21,7 +21,6 @@ public class CheckWithDepartment implements CheckWithCheck.SimpleCheck {
         catch (Exception e){
 
         }
-//        return true;
         return false;
     }
 }

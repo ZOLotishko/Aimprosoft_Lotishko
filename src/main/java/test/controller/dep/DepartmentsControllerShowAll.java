@@ -14,12 +14,17 @@ import java.util.List;
 /**
  * Created on 04.04.16.
  */
-public class ShowAllDepartmnetsController implements InternalController {
+public class DepartmentsControllerShowAll implements InternalController {
 
     @Override
-    public void executor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ErrorException {
+    public void executor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         DepartmentServiceImpl departmentService = new DepartmentServiceImpl();
-        List<Department> dep = departmentService.getAll();
+        List<Department> dep = null;
+        try {
+            dep = departmentService.getAll();
+        } catch (ErrorException e) {
+            e.printStackTrace();
+        }
         request.setAttribute("dep", dep);
         request.getRequestDispatcher("/jsp/listDepartment.jsp").forward(request, response);
     }

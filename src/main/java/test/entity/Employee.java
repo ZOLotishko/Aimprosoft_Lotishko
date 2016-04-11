@@ -1,6 +1,10 @@
 package test.entity;
 
-import net.sf.oval.constraint.*;
+
+import net.sf.oval.constraint.CheckWith;
+import net.sf.oval.constraint.Email;
+import net.sf.oval.constraint.NotEmpty;
+import net.sf.oval.constraint.NotNull;
 import test.validation.CheckWithEmployee;
 
 import java.util.Date;
@@ -12,9 +16,9 @@ public class Employee {
 
     private Integer id;
 
-    @NotEmpty(message = "Field name is empty")
-    @NotNull(message = "Field name is empty")
-    @Length(min = 1, max = 20, message = "insert minimum 1 char")
+//    @NotEmpty(message = "Field name is empty")
+//    @NotNull(message = "Field name is empty")
+//    @Length(min = 1, max = 20, message = "insert minimum 1 char")
     private String name;
 
     @NotNull(message = "Field email is empty")
@@ -22,15 +26,15 @@ public class Employee {
     @Email(message = "incorrect email format")
     @CheckWith(value = CheckWithEmployee.class, message = "This email already exist")
     private String email;
-
-    @NotNull (message = "Field salary is empty")
-    @NotEmpty (message = "Field salary is empty")
-    @Length (min = 1, message = "insert minimum 1 int")
-    @NotNegative (message = "Salary can't be negative")
+//
+//    @NotNull (message = "Field salary is empty")
+//    @NotEmpty (message = "Field salary is empty")
+//    @Length (min = 1, message = "insert minimum 1 int")
+//    @NotNegative (message = "Salary can't be negative")
     private Double salary;
 
-    @NotNull(message = "Incorrect date format")
-    @NotEmpty(message = "Field date is empty")
+//    @NotNull(message = "Incorrect date format")
+//    @NotEmpty(message = "Field date is empty")
     private Date date;
     private Integer department_id;
 

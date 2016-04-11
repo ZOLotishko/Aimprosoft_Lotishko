@@ -17,7 +17,7 @@ public class MainController extends HttpServlet{
     private ControllerFactory controllerFactory = new ControllerFactory();
 
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         String controllerAction = req.getRequestURI();
 
         InternalController controller = controllerFactory.getControllerByName(controllerAction);
@@ -25,13 +25,9 @@ public class MainController extends HttpServlet{
             controller = controllerFactory.getDefaultController();
         }
         try {
-            try {
-                controller.executor(req, resp);
-            } catch (ErrorException e) {
-                e.printStackTrace();
-            }
-        } catch (ValidationException e) {
-            e.printStackTrace();
+            controller.executor(req, resp);
+        }catch (ValidationException e){
+
         }
     }
 }

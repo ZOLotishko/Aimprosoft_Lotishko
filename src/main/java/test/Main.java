@@ -1,7 +1,9 @@
 package test;
 
 
+import test.dao.DepartmentDAO;
 import test.dao.EmployeeDAO;
+import test.dao.impl.DepartmentDAOImpl;
 import test.dao.impl.EmployeeDAOImpl;
 import test.entity.Employee;
 import test.exeption.ErrorException;
@@ -14,16 +16,9 @@ import java.util.Date;
  */
 public class Main {
     public static void main(String[] args ) throws ErrorException {
-        Date date = Utils.parseStringToDate("1222/12/12");
-        Employee employee = new Employee("name","rfrfznj", date,76.9, 2);
-        EmployeeDAO employeeDAO = new EmployeeDAOImpl();
-        try {
-            employeeDAO.createEmployee(employee);
-        } catch (ErrorException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(employeeDAO.readEmployees());
+//
+    EmployeeDAO employeeDAO = new EmployeeDAOImpl();
+//        System.out.println(employeeDAO.checkEmployeeEmail("fdhjdeyhjesryj", 9));
 
     }
 }

@@ -13,6 +13,6 @@ import java.io.IOException;
  */
 public interface InternalController {
 
-    void executor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ValidationException, ErrorException;
+    void executor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ValidationException;
 
 }

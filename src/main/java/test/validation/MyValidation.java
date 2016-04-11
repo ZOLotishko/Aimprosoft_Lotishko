@@ -19,11 +19,11 @@ import java.util.Map;
  */
 public class MyValidation {
 
-   private Map<String,String> error = new HashMap<>();
+
    private Validator validator = new Validator();
 
     public Map<String, String> validation(Object object) throws ValidationException{
-
+        Map<String,String> error = new HashMap<>();
         if (object != 0) {
             List<ConstraintViolation> violations = validator.validate(object);
             if (violations.size() > 0) {

@@ -5,6 +5,7 @@ import test.exeption.ErrorException;
 import test.exeption.ValidationException;
 import test.service.EmployeeService;
 import test.service.impl.EmployeeServiceImpl;
+import test.util.Utils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,12 +19,12 @@ public class EmployeeControllerDelete implements InternalController {
 
     EmployeeService employeeService = new EmployeeServiceImpl();
     @Override
-    public void executor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ValidationException, ErrorException {
+    public void executor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         try {
-            Integer id = Integer.parseInt((request.getParameter("delete")));
-            Integer depId = Integer.parseInt((request.getParameter("department_id")));
+            Integer id = Utils.parseStringToInteger(request.getParameter("id"));
+            Integer depId = Utils.parseStringToInteger(request.getParameter("department_id"));
             employeeService.delete(id);
-            String url = "/listEmployee?id=" + depId;
+            String url = "/listEmployees?department_id=" + depId;
             response.sendRedirect(url);
         }catch (ErrorException e){
 

@@ -11,17 +11,19 @@ import test.util.Utils;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.jstl.sql.SQLExecutionTag;
 import java.io.IOException;
 import java.util.Date;
 
 /**
  * Created on 06.04.16.
  */
-public class AddEmployeeController implements InternalController {
+public class EmployeeControllerAdd implements InternalController {
 
-    EmployeeService employeeService = new EmployeeServiceImpl();
+    private EmployeeService employeeService = new EmployeeServiceImpl();
+
     @Override
-    public void executor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ErrorException, ValidationException {
+    public void executor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String id = request.getParameter("id");
         String name = request.getParameter("name");
@@ -29,7 +31,7 @@ public class AddEmployeeController implements InternalController {
         String d = request.getParameter("date");
         Date date = Utils.parseStringToDate(d);
         Double salary = Utils.parseStringToDouble(request.getParameter("salary"));
-        Integer dep_id = Integer.parseInt(request.getParameter("department_id"));
+        Integer dep_id = Utils.parseStringToInteger(request.getParameter("department_id"));
 
         Employee employee = new Employee(name, email, date, salary, dep_id);
 
@@ -37,14 +39,24 @@ public class AddEmployeeController implements InternalController {
             if (id.isEmpty()){
                 employeeService.create(employee);
             }else{
-                employee.setId(Integer.valueOf(id));
+                employee.setId(Utils.parseStringToInteger(id));
                 employeeService.update(employee);
             }
-        }catch (ValidationException e){
-            request.setAttribute("emp", employee);
-            request.setAttribute("error", e.getError() );
-            response.sendRedirect("/addEmployee?department_id=" + dep_id);
+            response.sendRedirect("/listEmployees?department_id=" + dep_id);
+        }catch (ErrorException er){
+
         }
-        response.sendRedirect("/listEmployee?department_id=" + employee.getDepartment_id());
+        catch (ValidationException e){
+            request.setAttribute("emp", employee);
+            request.setAttribute("department_id", request.getParameter("department_id"));
+            request.setAttribute("error", e.getError() );
+
+//            response.sendRedirect("/addEmployee?department_id=" + dep_id);
+            request.getRequestDispatcher("/jsp/addEmployee.jsp").forward(request, response);
+
+        }
+
+
+
     }
 }

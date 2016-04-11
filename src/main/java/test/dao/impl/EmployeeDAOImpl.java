@@ -2,6 +2,7 @@ package test.dao.impl;
 
 import test.dao.EmployeeDAO;
 import test.entity.Employee;
+import test.exeption.ErrorException;
 import test.util.MYSQLConnection;
 
 import java.sql.Connection;
@@ -9,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.List;
 
 /**
@@ -16,7 +18,7 @@ import java.util.List;
  */
 public class EmployeeDAOImpl implements EmployeeDAO {
 
-    public Employee readEmployeeByID(Integer id) {
+    public Employee readEmployeeByID(Integer id) throws EmptyStackException{
 
         Connection connection = MYSQLConnection.getConnection();
         String sql = "SELECT * FROM employee WHERE id = ?";
@@ -33,7 +35,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
                 employee.setEmail(resultSet.getString("email"));
                 employee.setDate(resultSet.getDate("date"));
                 employee.setSalary(resultSet.getDouble("salary"));
-                employee.setDepartment_id(resultSet.getInt(""));
+                employee.setDepartment_id(resultSet.getInt("department_id"));
 
             }
         } catch (SQLException e) {
@@ -158,8 +160,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         return employees;
     }
 
-    @Override
-    public boolean checkEmployeeEmail(String email, int id) {
+//    @Override
+    public boolean checkEmail(String email, Integer id) throws ErrorException {
 
         Connection connection = MYSQLConnection.getConnection();
         String sql = "SELECT * FROM employee WHERE email = ? ";

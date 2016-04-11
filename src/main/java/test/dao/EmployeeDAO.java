@@ -29,5 +29,5 @@ public interface EmployeeDAO {
     List<Employee> readEmployeeByIDDepartment(Integer id) throws ErrorException;
 
     @test.dao.support.Connection
-    boolean checkEmployeeEmail(String email, int id) throws ErrorException;
+    boolean checkEmail(String email, Integer id) throws ErrorException;
 }
