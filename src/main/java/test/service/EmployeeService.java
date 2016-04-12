@@ -17,5 +17,6 @@ public interface EmployeeService {
     void delete(Integer id) throws ErrorException;
     List<Employee> getAll() throws ErrorException;
     List<Employee> getAllEmployeesInDepartment(Integer id) throws ErrorException;
+    void createOrUpdateEmployee(Employee employee) throws ValidationException, ErrorException;
 
 }

@@ -1,7 +1,6 @@
 package test.controller;
 
 import test.exeption.ErrorException;
-import test.exeption.ValidationException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,22 +11,23 @@ import java.io.IOException;
 /**
  * Created on 04.04.16.
  */
-public class MainController extends HttpServlet{
+public class MainController extends HttpServlet {
 
     private ControllerFactory controllerFactory = new ControllerFactory();
 
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String controllerAction = req.getRequestURI();
 
         InternalController controller = controllerFactory.getControllerByName(controllerAction);
-        if(controller==null){
+        if (controller == null) {
             controller = controllerFactory.getDefaultController();
         }
         try {
             controller.executor(req, resp);
-        }catch (ValidationException e){
+        } catch (ErrorException e) {
 
         }
+
     }
 }

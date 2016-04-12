@@ -1,8 +1,9 @@
-package test.controller.dep;
+package test.controller.department;
 
 import test.controller.InternalController;
 import test.entity.Department;
 import test.exeption.ErrorException;
+import test.service.DepartmentService;
 import test.service.impl.DepartmentServiceImpl;
 import test.util.Utils;
 
@@ -16,19 +17,16 @@ import java.io.IOException;
  */
 public class DepartmentsControllerShowAddList implements InternalController {
 
-    DepartmentServiceImpl departmentService = new DepartmentServiceImpl();
+    private DepartmentService departmentService = new DepartmentServiceImpl();
+
     @Override
-    public void executor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void executor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException , ErrorException{
 
         String id = request.getParameter("department_id");
 
         if(id!=null){
-            Department department = null;
-            try {
-                department = departmentService.read(Utils.parseStringToInteger(id));
-            } catch (ErrorException e) {
-                e.printStackTrace();
-            }
+            Department department = departmentService.read(Utils.parseStringToInteger(id));
+
             if(department!=null){
                 request.setAttribute("department", department);
             }

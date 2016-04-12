@@ -1,8 +1,9 @@
-package test.controller.empl;
+package test.controller.employee;
 
 import test.controller.InternalController;
 import test.entity.Employee;
 import test.exeption.ErrorException;
+import test.service.EmployeeService;
 import test.service.impl.EmployeeServiceImpl;
 
 import javax.servlet.ServletException;
@@ -15,26 +16,18 @@ import java.io.IOException;
  */
 public class EmployeeControllerShowAddList implements InternalController{
 
-    EmployeeServiceImpl employeeService = new EmployeeServiceImpl();
+    private EmployeeService employeeService = new EmployeeServiceImpl();
     @Override
-    public void executor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void executor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException ,ErrorException{
 
         String id = request.getParameter("id");
-//        String dep_id = request.getParameter("department_id");
         if(id!=null){
-            Employee employee = null;
-            try {
-                employee = employeeService.read(Integer.parseInt(id));
-            } catch (ErrorException e) {
-                e.printStackTrace();
-            }
+            Employee employee = employeeService.read(Integer.parseInt(id));
             if(employee!=null){
                 request.setAttribute("emp", employee);
                 request.setAttribute("department_id", request.getParameter("department_id"));
             }
         }
-
         request.getRequestDispatcher("jsp/addEmployee.jsp").forward(request, response);
-
     }
 }

@@ -1,23 +1,21 @@
 package test.entity;
 
 
-import net.sf.oval.constraint.CheckWith;
-import net.sf.oval.constraint.Email;
-import net.sf.oval.constraint.NotEmpty;
-import net.sf.oval.constraint.NotNull;
+import net.sf.oval.constraint.*;
 import test.validation.CheckWithEmployee;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created on 04.04.16.
  */
-public class Employee {
+public class Employee implements Serializable {
 
     private Integer id;
 
-//    @NotEmpty(message = "Field name is empty")
-//    @NotNull(message = "Field name is empty")
+    @NotEmpty(message = "Field name is empty")
+    @NotNull(message = "Field name is empty")
 //    @Length(min = 1, max = 20, message = "insert minimum 1 char")
     private String name;
 
@@ -27,13 +25,13 @@ public class Employee {
     @CheckWith(value = CheckWithEmployee.class, message = "This email already exist")
     private String email;
 //
-//    @NotNull (message = "Field salary is empty")
+    @NotNull (message = "Field salary is empty")
 //    @NotEmpty (message = "Field salary is empty")
 //    @Length (min = 1, message = "insert minimum 1 int")
 //    @NotNegative (message = "Salary can't be negative")
     private Double salary;
 
-//    @NotNull(message = "Incorrect date format")
+    @NotNull(message = "Incorrect date format")
 //    @NotEmpty(message = "Field date is empty")
     private Date date;
     private Integer department_id;

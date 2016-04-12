@@ -14,10 +14,7 @@ public class CheckWithEmployee implements CheckWithCheck.SimpleCheck {
 
         try {
             EmployeeDAO employeeDAO = new EmployeeDAOImpl();
-            Integer id = ((Employee) validatedObject).getId();
-            String email = ((Employee) validatedObject).getEmail();
-//            return employeeDAO.checkEmployeeEmail(((Employee) validatedObject).getEmail(), ((Employee) validatedObject).getId() );
-            return employeeDAO.checkEmail(email, id);
+            return employeeDAO.checkEmail(((Employee) validatedObject).getEmail(), ((Employee) validatedObject).getId() );
 
        } catch (Exception e) {}
         return false;

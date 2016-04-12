@@ -6,10 +6,12 @@ import net.sf.oval.constraint.NotEmpty;
 import net.sf.oval.constraint.NotNull;
 import test.validation.CheckWithDepartment;
 
+import java.io.Serializable;
+
 /**
  * Created by user on 04.04.16.
  */
-public class Department {
+public class Department implements Serializable {
 
     private Integer id;
     @NotNull (message = "Name can`t be empty")

@@ -1,8 +1,9 @@
-package test.controller.empl;
+package test.controller.employee;
 
 import test.controller.InternalController;
 import test.entity.Employee;
 import test.exeption.ErrorException;
+import test.service.EmployeeService;
 import test.service.impl.EmployeeServiceImpl;
 import test.util.Utils;
 
@@ -17,21 +18,15 @@ import java.util.List;
  */
 public class EmployeeControllerShowList implements InternalController {
 
-    EmployeeServiceImpl employeeService = new EmployeeServiceImpl();
+    private EmployeeService employeeService = new EmployeeServiceImpl();
     @Override
-    public void executor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    public void executor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ErrorException{
 
         String id = request.getParameter("department_id");
 
-
         if(id!=null){
             Integer depId = Utils.parseStringToInteger(id);
-            List<Employee> employees = null;
-            try {
-                employees = employeeService.getAllEmployeesInDepartment(depId);
-            } catch (ErrorException e) {
-                e.printStackTrace();
-            }
+            List<Employee> employees = employeeService.getAllEmployeesInDepartment(depId);
             if(employees!=null){
                 request.setAttribute("department_id",depId);
                 request.setAttribute("emp",employees);

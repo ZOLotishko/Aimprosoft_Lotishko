@@ -55,5 +55,12 @@ public class EmployeeServiceImpl  implements EmployeeService{
         return employeeDAO.readEmployeeByIDDepartment(id);
     }
 
-
+    @Override
+    public void createOrUpdateEmployee(Employee employee) throws ValidationException, ErrorException {
+        Map<String, String> errors = myValidation.validation(employee);
+        if (errors.size() > 0) {
+            throw new ValidationException(errors);
+        }
+        employeeDAO.createOrUpdateEmployee(employee);
+    }
 }

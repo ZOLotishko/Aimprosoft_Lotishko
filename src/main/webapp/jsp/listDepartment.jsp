@@ -3,35 +3,40 @@
 <html>
 <head>
     <title>List Department</title>
+    <link href="/css/materialaze.css" rel="stylesheet">
 </head>
 <body>
-<h1 align="center">List Department</h1>
-<table border="1">
-    <thead>
-    <tr>
-        <th>ID:</th>
-        <th>Name:</th>
-        <th>Edit:</th>
-        <th>Delete:</th>
-        <th>List Employee</th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach var="dep" items="${dep}">
-        <tr>
-            <td><c:out value="${dep.id}" /></td>
-            <td><c:out value="${dep.name}" /></td>
+<h1 class="card-panel teal lighten-2" align="center">List Department</h1>
 
-            <td><a href="/addDepartment?department_id=${dep.id}">Update</a></td>
-            <td><a href="/deleteDepartment?department_id=${dep.id}">Delete</a></td>
-            <td><a href="/listEmployees?department_id=${dep.id}">Show all employees</a></td>
+<div class="container">
+    <table class="striped">
+        <thead>
+        <div class="row">
+            <th>ID:</th>
+            <th>Name:</th>
+            <th>Edit:</th>
+            <th>Delete:</th>
+            <th>List Employee</th>
+        </div>
+        </thead>
+        <tbody>
+        <c:forEach var="dep" items="${dep}">
+            <tr>
+                <td><c:out value="${dep.id}" /></td>
+                <td><c:out value="${dep.name}" /></td>
 
-        </tr>
-    </c:forEach>
-    </tbody>
-</table>
-<form method="POST" action='addDepartment'>
-    <input type="submit" value="Add Department">
-</form>
+                <td><a href="/addDepartment?department_id=${dep.id}">Update</a></td>
+                <td><a  href="/deleteDepartment?department_id=${dep.id}">Delete</a></td>
+                <td><a  href="/listEmployees?department_id=${dep.id}">Show all employees</a></td>
+
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+
+    <form method="POST" action='addDepartment'>
+        <input class="waves-effect waves-light btn" type="submit" value="Add Department">
+    </form>
+</div>
 </body>
 </html>

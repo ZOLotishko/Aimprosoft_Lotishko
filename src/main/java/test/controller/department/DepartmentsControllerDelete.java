@@ -1,7 +1,8 @@
-package test.controller.dep;
+package test.controller.department;
 
 import test.controller.InternalController;
 import test.exeption.ErrorException;
+import test.service.DepartmentService;
 import test.service.impl.DepartmentServiceImpl;
 import test.util.Utils;
 
@@ -14,16 +15,17 @@ import java.io.IOException;
  * Created on 05.04.16.
  */
 public class DepartmentsControllerDelete implements InternalController {
-    @Override
-    public void executor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+    private DepartmentService departmentService = new DepartmentServiceImpl();
+
+    @Override
+    public void executor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ErrorException {
         Integer action = Utils.parseStringToInteger(request.getParameter("department_id"));
 
-        DepartmentServiceImpl departmentService = new DepartmentServiceImpl();
         try {
             departmentService.delete(action);
-        } catch (ErrorException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new ErrorException("");
         }
 
         response.sendRedirect("/");

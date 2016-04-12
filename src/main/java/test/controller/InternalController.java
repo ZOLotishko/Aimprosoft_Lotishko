@@ -1,7 +1,6 @@
 package test.controller;
 
 import test.exeption.ErrorException;
-import test.exeption.ValidationException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +12,6 @@ import java.io.IOException;
  */
 public interface InternalController {
 
-    void executor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ValidationException;
+    void executor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ErrorException;
 
 }

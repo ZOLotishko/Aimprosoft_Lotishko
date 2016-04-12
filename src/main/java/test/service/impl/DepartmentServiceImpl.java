@@ -11,6 +11,7 @@ import test.exeption.ValidationException;
 import test.service.DepartmentService;
 import test.validation.MyValidation;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -50,7 +51,7 @@ public class DepartmentServiceImpl implements DepartmentService{
     }
 
     @Override
-    public void delete(Integer id) throws ErrorException{
+    public void delete(Integer id) throws ErrorException {
 
         List<Employee> employees = employeeDAO.readEmployeeByIDDepartment(id);
         if(!employees.isEmpty()){
@@ -66,6 +67,17 @@ public class DepartmentServiceImpl implements DepartmentService{
     @Override
     public List<Department> getAll() throws ErrorException {
         return departmentDAO.readDepartments();
+    }
+
+    @Override
+    public void createOrUpdate(Department department) throws ValidationException, ErrorException {
+
+        Map<String,String> errors = myValidation.validation(department);
+        if (errors.size() > 0) {
+            throw new ValidationException( errors);
+        }
+        departmentDAO.createOrUpdateDepartment(department);
+
     }
 
 //    @Override

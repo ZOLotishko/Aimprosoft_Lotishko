@@ -27,4 +27,7 @@ public interface DepartmentDAO {
 
     @test.dao.support.Connection
     boolean checkName( String name, Integer id) throws ErrorException;
+
+    @test.dao.support.Connection
+    void createOrUpdateDepartment(Department department ) throws  ErrorException;
 }

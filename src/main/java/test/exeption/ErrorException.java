@@ -1,5 +1,7 @@
 package test.exeption;
 
+import java.sql.SQLException;
+
 /**
  * Created by Sveta on 10.04.2016.
  */

@@ -1,4 +1,4 @@
-package test.controller.dep;
+package test.controller.department;
 
 import test.controller.InternalController;
 import test.entity.Department;
@@ -27,22 +27,15 @@ public class DepartmentsControllerAdd implements InternalController {
         String id = request.getParameter("id");
         department.setId(Utils.parseStringToInteger(id));
         department.setName(request.getParameter("name"));
-
         try {
-            if (id.isEmpty()) {
-                departmentService.create(department);
-            } else {
-                departmentService.update(department);
-            }
+            departmentService.createOrUpdate(department);
             response.sendRedirect("/");
-        }
-        catch (ErrorException er){
-        }
-        catch (ValidationException e) {
+        }catch (ValidationException e) {
             request.setAttribute("department", department);
-            request.setAttribute("error", e.getError() );
+            request.setAttribute("error", e.getError());
             request.getRequestDispatcher("/jsp/addDepartments.jsp").forward(request, response);
+        } catch (ErrorException e) {
+            e.printStackTrace();
         }
-
     }
 }

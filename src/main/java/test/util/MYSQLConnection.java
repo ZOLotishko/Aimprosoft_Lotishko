@@ -11,7 +11,7 @@ public class MYSQLConnection {
 
     private static final String USER = "root";
     private static final String PASSWORD = "1";
-    private static final String URL = "jdbc:mysql://localhost:3306/company" ;
+    private static final String URL = "jdbc:mysql://localhost:3306/company?useEncoding=true&characterEncoding=UTF-8" ;
     private static final String DRIVER = "com.mysql.jdbc.Driver";
 
     private static final ThreadLocal<Connection> CONNECTION_THREAD_LOCAL = new ThreadLocal<>();

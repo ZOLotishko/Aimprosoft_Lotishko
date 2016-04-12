@@ -3,21 +3,29 @@
 <html>
 <head>
     <title>New Department</title>
+    <link href="/css/materialaze.css" rel="stylesheet">
 </head>
-
 <body>
 <center>
     <form method="POST" action="/showAddList">
-        <h2>  Department</h2>
-        <table>
-            <h1>Creating or updating Department</h1>
-            <input type="hidden" name="id" value="<c:out value="${department.id}"/>"/>
-            Name : <input type="text" name="name"  value="<c:out value="${param['name'] eq null ? department.name : param['name']}"/>"/></br>
-            <span class="error" style="color: crimson">${error.get("name")}</span></br>
+        <h2 class="card-panel teal lighten-2" align="center">Creating or updating   Department</h2>
 
-        </table>
-        <input type="submit" value="add">
+        <div class="container">
 
+            <div class="row">
+                <div class="col s4 offset-s4">
+                    <table class="striped">
+
+                        <input type="hidden" name="id" value="<c:out value="${department.id}"/>"/>
+                        Name : <input type="text" name="name"  value="<c:out value="${param['name'] eq null ? department.name : param['name']}"/>"/></br>
+                        <span class="error" style="color: crimson">${error.get("name")}</span></br>
+
+                    </table>
+                    <input  class="waves-effect waves-light btn" type="submit" value="add">
+                </div>
+            </div>
+
+        </div>
     </form>
 </center>
 </body>

@@ -31,7 +31,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
                 department.setName(resultSet.getString("name"));
             }
         } catch (SQLException e) {
-
+            throw new ErrorException("");
         }
         return department;
     }
@@ -55,7 +55,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new ErrorException("");
         }
         return departments;
     }
@@ -70,7 +70,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new ErrorException("");
         }
     }
 
@@ -85,7 +85,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new ErrorException("");
         }
     }
 
@@ -99,7 +99,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new ErrorException("");
         }
 
     }
@@ -120,8 +120,36 @@ public class DepartmentDAOImpl implements DepartmentDAO {
             }
         }
         catch (SQLException e) {
-            e.printStackTrace();
+            throw new ErrorException("");
         }
         return true;
+    }
+
+    @Override
+    public void createOrUpdateDepartment(Department department) throws ErrorException {
+
+        String sql;
+        Integer id = department.getId();
+        if (id == null){
+            sql = "INSERT into department ( name) VALUES (?)";
+        }else {
+            sql = "UPDATE department SET name = ? WHERE id = ?";
+        }
+        Connection connection = MYSQLConnection.getConnection();
+        try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+            if (id == null) {
+                preparedStatement.setString(1, department.getName());
+            }else {
+                preparedStatement.setString(1, department.getName());
+                preparedStatement.setInt(2, department.getId());
+            }
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new ErrorException("");
+        }
+
+
+
     }
 }

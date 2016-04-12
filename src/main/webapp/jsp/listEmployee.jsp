@@ -3,40 +3,46 @@
 <html>
 <head>
     <title></title>
-
+    <link href="/css/materialaze.css" rel="stylesheet">
 </head>
 <body>
-<h1>List Employee</h1>
-<h2>Department: <c:out value="${department_id}"/></h2>
-<table border="1">
-    <thead>
-    <tr>
-        <th>ID:</th>
-        <th>Name:</th>
-        <th>Email:</th>
-        <th>Born day:</th>
-        <th>Salary</th>
-        <th>id Dept:</th>
-        <th>Delete:</th>
-        <th>Edit:</th>
+<h1 class="card-panel teal lighten-2" align="center">List Employee</h1>
+<div class="card-panel">
+    <h3  align="center">Department: <c:out value="${department_id}"/></h3>
+</div>
+<div class="container">
+    <table class="striped">
 
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach var="emp" items="${emp}">
-        <tr>
-            <td><c:out value="${emp.id}" /></td>
-            <td><c:out value="${emp.name}"></c:out>
-            <td><c:out value="${emp.email}" /></td>
-            <td><c:out value="${emp.date}" /></td>
-            <td><c:out value="${emp.salary}"></c:out>
-            <td><c:out value="${department_id}" /></td>
-            <td><a href="/deleteEmployee?id=${emp.id}&department_id=${department_id}">Delete</a></td>
-            <td><a href="/addEmployee?id=${emp.id}&department_id=${department_id}">Update</a></td>
-        </tr>
-    </c:forEach>
-    </tbody>
-</table>
-<input type=button onClick="location.href='/addEmployee?department_id=<c:out value="${department_id}"/>'" value='Add Employee'>
+        <thead>
+        <div class="row">
+            <th>ID:</th>
+            <th>Name:</th>
+            <th>Email:</th>
+            <th>Born day:</th>
+            <th>Salary</th>
+            <th>id Dept:</th>
+            <th>Delete:</th>
+            <th>Edit:</th>
+
+        </div>
+        </thead>
+        <tbody>
+        <c:forEach var="emp" items="${emp}">
+            <tr>
+                <td><c:out value="${emp.id}" /></td>
+                <td><c:out value="${emp.name}"></c:out>
+                <td><c:out value="${emp.email}" /></td>
+                <td><c:out value="${emp.date}" /></td>
+                <td><c:out value="${emp.salary}"></c:out>
+                <td><c:out value="${department_id}" /></td>
+
+                <td><a  href="/deleteEmployee?id=${emp.id}&department_id=${department_id}">Delete</a></td>
+                <td><a  href="/addEmployee?id=${emp.id}&department_id=${department_id}">Update</a></td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+    <input class="waves-effect waves-light btn" type=button onClick="location.href='/addEmployee?department_id=<c:out value="${department_id}"/>'" value='Add Employee'>
+</div>
 </body>
 </html>

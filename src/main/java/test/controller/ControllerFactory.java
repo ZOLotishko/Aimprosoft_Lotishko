@@ -1,13 +1,13 @@
 package test.controller;
 
-import test.controller.dep.DepartmentsControllerAdd;
-import test.controller.dep.DepartmentsControllerDelete;
-import test.controller.dep.DepartmentsControllerShowAddList;
-import test.controller.dep.DepartmentsControllerShowAll;
-import test.controller.empl.EmployeeControllerAdd;
-import test.controller.empl.EmployeeControllerDelete;
-import test.controller.empl.EmployeeControllerShowAddList;
-import test.controller.empl.EmployeeControllerShowList;
+import test.controller.department.DepartmentsControllerAdd;
+import test.controller.department.DepartmentsControllerDelete;
+import test.controller.department.DepartmentsControllerShowAddList;
+import test.controller.department.DepartmentsControllerShowAll;
+import test.controller.employee.EmployeeControllerAdd;
+import test.controller.employee.EmployeeControllerDelete;
+import test.controller.employee.EmployeeControllerShowAddList;
+import test.controller.employee.EmployeeControllerShowList;
 
 import java.util.HashMap;
 import java.util.Map;

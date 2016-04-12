@@ -3,6 +3,7 @@ package test.dao;
 import test.entity.Employee;
 import test.exeption.ErrorException;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -30,4 +31,7 @@ public interface EmployeeDAO {
 
     @test.dao.support.Connection
     boolean checkEmail(String email, Integer id) throws ErrorException;
+
+    @test.dao.support.Connection
+    void createOrUpdateEmployee(Employee employee) throws  ErrorException;
 }
