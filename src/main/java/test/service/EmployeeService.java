@@ -1,9 +1,9 @@
 package test.service;
 
 import test.entity.Employee;
-import test.exeption.ErrorException;
 import test.exeption.ValidationException;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -11,12 +11,12 @@ import java.util.List;
  */
 public interface EmployeeService {
 
-    void create(Employee employee) throws ValidationException, ErrorException;
-    Employee read(Integer id) throws ErrorException;
-    void update(Employee employee) throws ValidationException, ErrorException;
-    void delete(Integer id) throws ErrorException;
-    List<Employee> getAll() throws ErrorException;
-    List<Employee> getAllEmployeesInDepartment(Integer id) throws ErrorException;
-    void createOrUpdateEmployee(Employee employee) throws ValidationException, ErrorException;
+    void create(Employee employee) throws ValidationException, SQLException;
+    Employee read(Integer id) throws SQLException;
+    void update(Employee employee) throws ValidationException, SQLException;
+    void delete(Integer id) throws SQLException;
+    List<Employee> getAll() throws SQLException;
+    List<Employee> getAllEmployeesInDepartment(Integer id) throws SQLException;
+    void createOrUpdateEmployee(Employee employee) throws ValidationException, SQLException;
 
 }

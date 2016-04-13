@@ -31,14 +31,14 @@ public class ControllerFactory {
         controllerMap.put("/addEmployee", new EmployeeControllerShowAddList());
         controllerMap.put("/addEmployees", new EmployeeControllerAdd());
         controllerMap.put("/deleteEmployee", new EmployeeControllerDelete());
-
+        controllerMap.put("/error",new ErrorController());
     }
 
-    public InternalController getControllerByName(String name){
+    public InternalController getControllerByName(String name) {
         return controllerMap.get(name);
     }
 
-    public InternalController getDefaultController(){
+    public InternalController getDefaultController() {
         return defaultController;
     }
 

@@ -1,8 +1,8 @@
 package test.dao;
 
 import test.entity.Department;
-import test.exeption.ErrorException;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -11,23 +11,23 @@ import java.util.List;
 public interface DepartmentDAO {
 
     @test.dao.support.Connection
-    Department readDepartmentByID(Integer id) throws ErrorException;
+    Department readDepartmentByID(Integer id) throws SQLException;
 
     @test.dao.support.Connection
-    List<Department> readDepartments() throws ErrorException;
+    List<Department> readDepartments() throws SQLException;
 
     @test.dao.support.Connection
-    void createDepartment(Department department) throws ErrorException;
+    void createDepartment(Department department) throws SQLException;
 
     @test.dao.support.Connection
-    void updateDepartment(Department department) throws ErrorException;
+    void updateDepartment(Department department) throws SQLException;
 
     @test.dao.support.Connection
-    void deleteDepartment(Integer id) throws ErrorException;
+    void deleteDepartment(Integer id) throws SQLException;
 
     @test.dao.support.Connection
-    boolean checkName( String name, Integer id) throws ErrorException;
+    boolean checkName( String name, Integer id) throws SQLException;
 
     @test.dao.support.Connection
-    void createOrUpdateDepartment(Department department ) throws  ErrorException;
+    void createOrUpdateDepartment(Department department ) throws SQLException;
 }

@@ -1,7 +1,5 @@
 package test.controller;
 
-import test.exeption.ErrorException;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,11 +21,7 @@ public class MainController extends HttpServlet {
         if (controller == null) {
             controller = controllerFactory.getDefaultController();
         }
-        try {
-            controller.executor(req, resp);
-        } catch (ErrorException e) {
-
-        }
+        controller.executor(req, resp);
 
     }
 }

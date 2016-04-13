@@ -2,7 +2,6 @@ package test.dao.impl;
 
 import test.dao.DepartmentDAO;
 import test.entity.Department;
-import test.exeption.ErrorException;
 import test.util.MYSQLConnection;
 
 import java.sql.Connection;
@@ -17,139 +16,134 @@ import java.util.List;
  */
 public class DepartmentDAOImpl implements DepartmentDAO {
 
-    public Department readDepartmentByID(Integer id) throws ErrorException {
+    public Department readDepartmentByID(Integer id) throws SQLException {
 
         Connection connection = MYSQLConnection.getConnection();
         String sql = "SELECT id, name FROM department WHERE id = ?";
-        ResultSet resultSet ;
+        ResultSet resultSet;
         Department department = new Department();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-            preparedStatement.setInt(1, id);
-            resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()){
-                department.setId(resultSet.getInt("id"));
-                department.setName(resultSet.getString("name"));
-            }
-        } catch (SQLException e) {
-            throw new ErrorException("");
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, id);
+        resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            department.setId(resultSet.getInt("id"));
+            department.setName(resultSet.getString("name"));
+        }
+        if (connection != null) {
+            connection.close();
         }
         return department;
     }
 
-    public List<Department> readDepartments() throws ErrorException {
+    public List<Department> readDepartments() throws SQLException {
         Connection connection = MYSQLConnection.getConnection();
         String sql = "SELECT id, name FROM department ";
         List<Department> departments = new ArrayList<>();
         ResultSet resultSet;
 
-        try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet != null){
-                while (resultSet.next()) {
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        resultSet = preparedStatement.executeQuery();
+        if (resultSet != null) {
+            while (resultSet.next()) {
 
-                    Department department = new Department();
-                    department.setId(resultSet.getInt("id"));
-                    department.setName(resultSet.getString("name"));
-                    departments.add(department);
-                }
+                Department department = new Department();
+                department.setId(resultSet.getInt("id"));
+                department.setName(resultSet.getString("name"));
+                departments.add(department);
             }
-
-        } catch (SQLException e) {
-            throw new ErrorException("");
+        }
+        if (connection != null) {
+            connection.close();
         }
         return departments;
     }
 
-    public void createDepartment(Department department) throws ErrorException{
+    public void createDepartment(Department department) throws SQLException {
 
         Connection connection = MYSQLConnection.getConnection();
         String sql = "INSERT into department ( name) VALUES (?)";
-        try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-            preparedStatement.setString(1, department.getName());
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, department.getName());
+        preparedStatement.executeUpdate();
 
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException e) {
-            throw new ErrorException("");
+        if (connection != null) {
+            connection.close();
         }
+
     }
 
-    public void updateDepartment(Department department) throws ErrorException {
+    public void updateDepartment(Department department) throws SQLException {
 
         Connection connection = MYSQLConnection.getConnection();
         String sql = "UPDATE department SET name = ? WHERE id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-            preparedStatement.setString(1, department.getName());
-            preparedStatement.setInt(2, department.getId());
-            preparedStatement.executeUpdate();
+        preparedStatement.setString(1, department.getName());
+        preparedStatement.setInt(2, department.getId());
+        preparedStatement.executeUpdate();
 
-        } catch (SQLException e) {
-            throw new ErrorException("");
+        if (connection != null) {
+            connection.close();
         }
     }
 
-    public void deleteDepartment(Integer id) throws ErrorException {
+    public void deleteDepartment(Integer id) throws SQLException {
 
         Connection connection = MYSQLConnection.getConnection();
-        String sql ="DELETE FROM department WHERE id = ? ";
-        try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+        String sql = "DELETE FROM department WHERE id = ? ";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-            preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
+        preparedStatement.setInt(1, id);
+        preparedStatement.executeUpdate();
 
-        } catch (SQLException e) {
-            throw new ErrorException("");
+        if (connection != null) {
+            connection.close();
         }
-
     }
 
-    public boolean checkName( String name, Integer id) throws ErrorException {
+    public boolean checkName(String name, Integer id) throws SQLException {
         Connection connection = MYSQLConnection.getConnection();
 
         String sql = "SELECT * FROM department WHERE name = ? ";
-        ResultSet resultSet ;
-        try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+        ResultSet resultSet;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, name);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                if(resultSet.getInt("id")!= id){
+                if (resultSet.getInt("id") != id) {
                     return false;
                 }
             }
-        }
-        catch (SQLException e) {
-            throw new ErrorException("");
+            if (connection != null) {
+                connection.close();
+            }
         }
         return true;
     }
 
     @Override
-    public void createOrUpdateDepartment(Department department) throws ErrorException {
+    public void createOrUpdateDepartment(Department department) throws SQLException {
 
         String sql;
         Integer id = department.getId();
-        if (id == null){
+        if (id == null) {
             sql = "INSERT into department ( name) VALUES (?)";
-        }else {
+        } else {
             sql = "UPDATE department SET name = ? WHERE id = ?";
         }
         Connection connection = MYSQLConnection.getConnection();
-        try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-            if (id == null) {
-                preparedStatement.setString(1, department.getName());
-            }else {
-                preparedStatement.setString(1, department.getName());
-                preparedStatement.setInt(2, department.getId());
-            }
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException e) {
-            throw new ErrorException("");
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        if (id == null) {
+            preparedStatement.setString(1, department.getName());
+        } else {
+            preparedStatement.setString(1, department.getName());
+            preparedStatement.setInt(2, department.getId());
         }
+        preparedStatement.executeUpdate();
 
-
-
+        if (connection != null) {
+            connection.close();
+        }
     }
 }

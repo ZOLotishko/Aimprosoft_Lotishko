@@ -1,7 +1,6 @@
 package test.controller.department;
 
 import test.controller.InternalController;
-import test.exeption.ErrorException;
 import test.service.DepartmentService;
 import test.service.impl.DepartmentServiceImpl;
 import test.util.Utils;
@@ -19,13 +18,13 @@ public class DepartmentsControllerDelete implements InternalController {
     private DepartmentService departmentService = new DepartmentServiceImpl();
 
     @Override
-    public void executor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ErrorException {
+    public void executor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         Integer action = Utils.parseStringToInteger(request.getParameter("department_id"));
 
         try {
             departmentService.delete(action);
         } catch (Exception e) {
-            throw new ErrorException("");
+            response.sendRedirect("/error");
         }
 
         response.sendRedirect("/");

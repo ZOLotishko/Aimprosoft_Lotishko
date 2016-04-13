@@ -2,7 +2,6 @@ package test.controller.department;
 
 import test.controller.InternalController;
 import test.entity.Department;
-import test.exeption.ErrorException;
 import test.exeption.ValidationException;
 import test.service.DepartmentService;
 import test.service.impl.DepartmentServiceImpl;
@@ -12,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * Created on 05.04.16.
@@ -34,8 +34,8 @@ public class DepartmentsControllerAdd implements InternalController {
             request.setAttribute("department", department);
             request.setAttribute("error", e.getError());
             request.getRequestDispatcher("/jsp/addDepartments.jsp").forward(request, response);
-        } catch (ErrorException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            response.sendRedirect("/error");
         }
     }
 }

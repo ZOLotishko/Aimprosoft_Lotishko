@@ -1,7 +1,6 @@
 package test.service;
 
 import test.entity.Department;
-import test.exeption.ErrorException;
 import test.exeption.ValidationException;
 
 import java.sql.SQLException;
@@ -12,10 +11,10 @@ import java.util.List;
  */
 public interface DepartmentService {
 
-    void create(Department department) throws ValidationException, ErrorException;
-    Department read(Integer id) throws ErrorException;
-    void update(Department department) throws ValidationException, ErrorException;
-    void delete(Integer id) throws ErrorException;
-    List<Department> getAll() throws ErrorException;
-    void createOrUpdate(Department department) throws ValidationException, ErrorException;
+    void create(Department department) throws ValidationException, SQLException;
+    Department read(Integer id) throws SQLException;
+    void update(Department department) throws ValidationException, SQLException;
+    void delete(Integer id) throws SQLException;
+    List<Department> getAll() throws SQLException;
+    void createOrUpdate(Department department) throws ValidationException, SQLException;
 }

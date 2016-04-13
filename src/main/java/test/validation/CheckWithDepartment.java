@@ -17,9 +17,8 @@ public class CheckWithDepartment implements CheckWithCheck.SimpleCheck {
         try {
             DepartmentDAO departmentService = new DepartmentDAOImpl();
             return departmentService.checkName(((Department) validatedObject).getName(), ((Department) validatedObject).getId());
-        }
-        catch (Exception e){
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return false;
     }

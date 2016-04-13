@@ -2,7 +2,6 @@ package test.controller.employee;
 
 import test.controller.InternalController;
 import test.entity.Employee;
-import test.exeption.ErrorException;
 import test.exeption.ValidationException;
 import test.service.EmployeeService;
 import test.service.impl.EmployeeServiceImpl;
@@ -12,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * Created on 06.04.16.
@@ -21,7 +21,7 @@ public class EmployeeControllerAdd implements InternalController {
     private EmployeeService employeeService = new EmployeeServiceImpl();
 
     @Override
-    public void executor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException , ErrorException{
+    public void executor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
         Employee employee = new Employee();
 
@@ -33,7 +33,11 @@ public class EmployeeControllerAdd implements InternalController {
         employee.setDepartment_id(Utils.parseStringToInteger(request.getParameter("department_id")));
 
         try {
-            employeeService.createOrUpdateEmployee(employee);
+            try {
+                employeeService.createOrUpdateEmployee(employee);
+            } catch (SQLException e) {
+                response.sendRedirect("/error");
+            }
             response.sendRedirect("/listEmployees?department_id=" + employee.getDepartment_id());
         }
         catch (ValidationException e){

@@ -1,7 +1,6 @@
 package test.dao;
 
 import test.entity.Employee;
-import test.exeption.ErrorException;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -12,26 +11,26 @@ import java.util.List;
 public interface EmployeeDAO {
 
     @test.dao.support.Connection
-    Employee readEmployeeByID(Integer id ) throws ErrorException;
+    Employee readEmployeeByID(Integer id ) throws SQLException;
 
     @test.dao.support.Connection
-    List<Employee> readEmployees() throws ErrorException;
+    List<Employee> readEmployees() throws SQLException;
 
     @test.dao.support.Connection
-    void createEmployee(Employee employee) throws ErrorException;
+    void createEmployee(Employee employee) throws SQLException;
 
     @test.dao.support.Connection
-    void updateEmployee(Employee employee) throws ErrorException;
+    void updateEmployee(Employee employee) throws SQLException;
 
     @test.dao.support.Connection
-    void deleteEmployee(Integer id) throws ErrorException;
+    void deleteEmployee(Integer id) throws SQLException;
 
     @test.dao.support.Connection
-    List<Employee> readEmployeeByIDDepartment(Integer id) throws ErrorException;
+    List<Employee> readEmployeeByIDDepartment(Integer id) throws SQLException;
 
     @test.dao.support.Connection
-    boolean checkEmail(String email, Integer id) throws ErrorException;
+    boolean checkEmail(String email, Integer id) throws SQLException;
 
     @test.dao.support.Connection
-    void createOrUpdateEmployee(Employee employee) throws  ErrorException;
+    void createOrUpdateEmployee(Employee employee) throws  SQLException;
 }
