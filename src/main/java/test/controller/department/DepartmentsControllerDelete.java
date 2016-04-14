@@ -26,7 +26,6 @@ public class DepartmentsControllerDelete implements InternalController {
         } catch (Exception e) {
             response.sendRedirect("/error");
         }
-
         response.sendRedirect("/");
     }
 }

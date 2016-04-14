@@ -24,11 +24,6 @@ public class Department implements Serializable {
         super();
     }
 
-    public Department( String name){
-
-        this.name = name;
-    }
-
     public Integer getId() {
         return id;
     }

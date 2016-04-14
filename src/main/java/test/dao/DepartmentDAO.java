@@ -26,7 +26,7 @@ public interface DepartmentDAO {
     void deleteDepartment(Integer id) throws SQLException;
 
     @test.dao.support.Connection
-    boolean checkName( String name, Integer id) throws SQLException;
+    boolean checkName(String name, Integer id) throws SQLException;
 
     @test.dao.support.Connection
     void createOrUpdateDepartment(Department department ) throws SQLException;

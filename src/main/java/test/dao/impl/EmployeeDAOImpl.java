@@ -28,12 +28,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
 
-            employee.setId(resultSet.getInt("id"));
-            employee.setName(resultSet.getString("name"));
-            employee.setEmail(resultSet.getString("email"));
-            employee.setDate(resultSet.getDate("date"));
-            employee.setSalary(resultSet.getDouble("salary"));
-            employee.setDepartment_id(resultSet.getInt("department_id"));
+            employee = fillEmpleyee(resultSet);
 
         }
         if (connection != null) {
@@ -55,15 +50,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         if (resultSet != null) {
             while (resultSet.next()) {
 
-                Employee employee = new Employee();
-
-                employee.setId(resultSet.getInt("id"));
-                employee.setName(resultSet.getString("name"));
-                employee.setEmail(resultSet.getString("email"));
-                employee.setDate(resultSet.getDate("date"));
-                employee.setSalary(resultSet.getDouble("salary"));
-                employee.setDepartment_id(resultSet.getInt("department_id"));
-
+                Employee employee = fillEmpleyee(resultSet);
                 employees.add(employee);
             }
         }
@@ -140,12 +127,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         if (resultSet != null) {
             while (resultSet.next()) {
 
-                Employee employee = new Employee();
-                employee.setId(resultSet.getInt("id"));
-                employee.setName(resultSet.getString("name"));
-                employee.setEmail(resultSet.getString("email"));
-                employee.setDate(resultSet.getDate("date"));
-                employee.setSalary(resultSet.getDouble("salary"));
+                Employee employee = fillEmpleyee(resultSet);
                 employees.add(employee);
             }
         }
@@ -205,5 +187,18 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         if (connection != null) {
             connection.close();
         }
+    }
+
+    private Employee fillEmpleyee(ResultSet resultSet) throws SQLException {
+        Employee employee = new Employee();
+
+        employee.setId(resultSet.getInt("id"));
+        employee.setName(resultSet.getString("name"));
+        employee.setEmail(resultSet.getString("email"));
+        employee.setDate(resultSet.getDate("date"));
+        employee.setSalary(resultSet.getDouble("salary"));
+        employee.setDepartment_id(resultSet.getInt("department_id"));
+
+        return employee;
     }
 }

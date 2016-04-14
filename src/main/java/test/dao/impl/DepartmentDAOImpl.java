@@ -26,8 +26,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
         preparedStatement.setInt(1, id);
         resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
-            department.setId(resultSet.getInt("id"));
-            department.setName(resultSet.getString("name"));
+            department = fillDepartment(resultSet);
         }
         if (connection != null) {
             connection.close();
@@ -46,9 +45,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
         if (resultSet != null) {
             while (resultSet.next()) {
 
-                Department department = new Department();
-                department.setId(resultSet.getInt("id"));
-                department.setName(resultSet.getString("name"));
+                Department department = fillDepartment(resultSet);
                 departments.add(department);
             }
         }
@@ -145,5 +142,12 @@ public class DepartmentDAOImpl implements DepartmentDAO {
         if (connection != null) {
             connection.close();
         }
+    }
+
+    private Department fillDepartment(ResultSet resultSet) throws SQLException {
+        Department department = new Department();
+        department.setId(resultSet.getInt("id"));
+        department.setName(resultSet.getString("name"));
+        return department;
     }
 }

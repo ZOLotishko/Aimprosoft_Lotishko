@@ -5,14 +5,11 @@ import net.sf.oval.ConstraintViolation;
 import net.sf.oval.Validator;
 import net.sf.oval.context.FieldContext;
 import net.sf.oval.context.OValContext;
-import test.exeption.ValidationException;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
 
 /**
  * Created on 08.04.16.
@@ -24,7 +21,7 @@ public class MyValidation {
 
     public Map<String, String> validation(Object object){
         Map<String,String> error = new HashMap<>();
-        if (object != 0) {
+        if (object != 0 || object != null) {
             List<ConstraintViolation> violations = validator.validate(object);
             if (violations.size() > 0) {
                 for (ConstraintViolation constraintViolation : violations) {
