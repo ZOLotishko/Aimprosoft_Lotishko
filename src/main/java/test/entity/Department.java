@@ -20,8 +20,12 @@ public class Department implements Serializable {
     @CheckWith(value=CheckWithDepartment.class, message = "This name already exists")
     private  String name;
 
-    public Department(){
-        super();
+    public Department(Integer id, String name){
+        this.id = id;
+        this.name = name;
+    }
+
+    public Department() {
     }
 
     public Integer getId() {

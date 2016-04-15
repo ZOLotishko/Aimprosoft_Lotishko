@@ -11,23 +11,23 @@ import java.util.List;
 public interface DepartmentDAO {
 
     @test.dao.support.Connection
-    Department readDepartmentByID(Integer id) throws SQLException;
+    Department readDepartmentByID(Integer id) ;
 
     @test.dao.support.Connection
-    List<Department> readDepartments() throws SQLException;
+    List<Department> readDepartments() ;
 
     @test.dao.support.Connection
-    void createDepartment(Department department) throws SQLException;
+    void createDepartment(Department department) ;
 
     @test.dao.support.Connection
-    void updateDepartment(Department department) throws SQLException;
+    void updateDepartment(Department department) ;
 
     @test.dao.support.Connection
-    void deleteDepartment(Integer id) throws SQLException;
+    void deleteDepartment(Integer id) ;
 
     @test.dao.support.Connection
-    boolean checkName(String name, Integer id) throws SQLException;
+    boolean checkName(String name, Integer id) ;
 
     @test.dao.support.Connection
-    void createOrUpdateDepartment(Department department ) throws SQLException;
+    void createOrUpdateDepartment(Department department ) ;
 }

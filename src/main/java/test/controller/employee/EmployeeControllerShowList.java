@@ -1,5 +1,6 @@
 package test.controller.employee;
 
+import org.springframework.stereotype.Component;
 import test.controller.InternalController;
 import test.entity.Employee;
 import test.service.EmployeeService;
@@ -16,6 +17,7 @@ import java.util.List;
 /**
  * Created on 06.04.16.
  */
+@Component("/listEmployees")
 public class EmployeeControllerShowList implements InternalController {
 
     private EmployeeService employeeService = new EmployeeServiceImpl();

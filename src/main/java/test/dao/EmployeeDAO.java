@@ -11,26 +11,26 @@ import java.util.List;
 public interface EmployeeDAO {
 
     @test.dao.support.Connection
-    Employee readEmployeeByID(Integer id ) throws SQLException;
+    Employee readEmployeeByID(Integer id ) ;
 
     @test.dao.support.Connection
-    List<Employee> readEmployees() throws SQLException;
+    List<Employee> readEmployees();
 
     @test.dao.support.Connection
-    void createEmployee(Employee employee) throws SQLException;
+    void createEmployee(Employee employee);
 
     @test.dao.support.Connection
-    void updateEmployee(Employee employee) throws SQLException;
+    void updateEmployee(Employee employee) ;
 
     @test.dao.support.Connection
-    void deleteEmployee(Integer id) throws SQLException;
+    void deleteEmployee(Integer id) ;
 
     @test.dao.support.Connection
-    List<Employee> readEmployeeByIDDepartment(Integer id) throws SQLException;
+    List<Employee> readEmployeeByIDDepartment(Integer id) ;
 
     @test.dao.support.Connection
-    boolean checkEmail(String email, Integer id) throws SQLException;
+    boolean checkEmail(String email, Integer id) ;
 
     @test.dao.support.Connection
-    void createOrUpdateEmployee(Employee employee) throws  SQLException;
+    void createOrUpdateEmployee(Employee employee) ;
 }

@@ -8,6 +8,12 @@
 </head>
 <body>
 <center>
+    <div>
+
+    </div>
+    <span>
+
+    </span>
     <form method="POST" name='formEmployee' action="/addEmployees">
         <h2 class="card-panel teal lighten-2" align="center">Add New Employee</h2>
         <div class="container">

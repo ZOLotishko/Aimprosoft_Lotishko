@@ -1,204 +1,98 @@
 package test.dao.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 import test.dao.EmployeeDAO;
 import test.entity.Employee;
-import test.util.MYSQLConnection;
+import test.util.Utils;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created on 04.04.16.
  */
+@Repository
 public class EmployeeDAOImpl implements EmployeeDAO {
 
-    public Employee readEmployeeByID(Integer id) throws SQLException {
+    private DataSource dataSource;
+    private JdbcTemplate jdbcTemplate;
 
-        Connection connection = MYSQLConnection.getConnection();
-        String sql = "SELECT * FROM employee WHERE id = ?";
-        ResultSet resultSet;
-        Employee employee = new Employee();
-
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1, id);
-        resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-
-            employee = fillEmpleyee(resultSet);
-
-        }
-        if (connection != null) {
-            connection.close();
-        }
-        return employee;
-    }
-
-    public List<Employee> readEmployees() throws SQLException {
-
-        Connection connection = MYSQLConnection.getConnection();
-
-        String sql = "SELECT id, name, email, date, salary, department_id FROM employee";
-        List<Employee> employees = new ArrayList<Employee>();
-        ResultSet resultSet;
-
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        resultSet = preparedStatement.executeQuery();
-        if (resultSet != null) {
-            while (resultSet.next()) {
-
-                Employee employee = fillEmpleyee(resultSet);
-                employees.add(employee);
-            }
-        }
-        if (connection != null) {
-            connection.close();
-        }
-        return employees;
-    }
-
-    public void createEmployee(Employee employee) throws SQLException {
-
-        Connection connection = MYSQLConnection.getConnection();
-        String sql = "INSERT into employee (name, email, date, salary, department_id) VALUES(?,?,?,?,?) ";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
-        preparedStatement.setString(1, employee.getName());
-        preparedStatement.setString(2, employee.getEmail());
-        preparedStatement.setDate(3, new java.sql.Date(employee.getDate().getTime()));
-        preparedStatement.setDouble(4, employee.getSalary());
-        preparedStatement.setInt(5, employee.getDepartment_id());
-
-        preparedStatement.executeUpdate();
-
-        if (connection != null) {
-            connection.close();
-        }
-
-    }
-
-    public void updateEmployee(Employee employee) throws SQLException {
-
-        Connection connection = MYSQLConnection.getConnection();
-        String sql = "UPDATE employee SET name = ?, email = ?, date = ?, salary = ?  WHERE id = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
-        preparedStatement.setString(1, employee.getName());
-        preparedStatement.setString(2, employee.getEmail());
-        preparedStatement.setDate(3, new java.sql.Date(employee.getDate().getTime()));
-        preparedStatement.setDouble(4, employee.getSalary());
-        preparedStatement.setInt(5, employee.getId());
-        preparedStatement.executeUpdate();
-
-        if (connection != null) {
-            connection.close();
-        }
-    }
-
-    public void deleteEmployee(Integer id) throws SQLException {
-
-        Connection connection = MYSQLConnection.getConnection();
-        String sql = "DELETE FROM employee WHERE id = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
-        preparedStatement.setInt(1, id);
-        preparedStatement.executeUpdate();
-
-        if (connection != null) {
-            connection.close();
-        }
-    }
-
-    public List<Employee> readEmployeeByIDDepartment(Integer id) throws SQLException {
-
-        Connection connection = MYSQLConnection.getConnection();
-        String sql = "SELECT * From employee WHERE department_id = ?";
-        ResultSet resultSet;
-        List<Employee> employees = new ArrayList<Employee>();
-
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
-        preparedStatement.setInt(1, id);
-        resultSet = preparedStatement.executeQuery();
-
-        if (resultSet != null) {
-            while (resultSet.next()) {
-
-                Employee employee = fillEmpleyee(resultSet);
-                employees.add(employee);
-            }
-        }
-        if (connection != null) {
-            connection.close();
-        }
-        return employees;
-    }
-
-    public boolean checkEmail(String email, Integer id) throws SQLException {
-
-        Connection connection = MYSQLConnection.getConnection();
-        String sql = "SELECT * FROM employee WHERE email = ? ";
-        ResultSet resultSet;
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
-        preparedStatement.setString(1, email);
-        resultSet = preparedStatement.executeQuery();
-
-        if (resultSet.next()) {
-            if (resultSet.getInt("id") != id) {
-                return false;
-            }
-        }
-        if (connection != null) {
-            connection.close();
-        }
-        return true;
+    @Autowired
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     @Override
-    public void createOrUpdateEmployee(Employee employee) throws SQLException {
-
-        String sql;
-        Integer id = employee.getId();
-        if (id == null) {
-            sql = "INSERT into employee (name, email, date, salary, department_id) VALUES(?,?,?,?,?) ";
-        } else {
-            sql = "UPDATE employee SET name = ?, email = ?, date = ?, salary = ?  WHERE id = ?";
-        }
-        Connection connection = MYSQLConnection.getConnection();
-
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
-        preparedStatement.setString(1, employee.getName());
-        preparedStatement.setString(2, employee.getEmail());
-        preparedStatement.setDate(3, new java.sql.Date(employee.getDate().getTime()));
-        preparedStatement.setDouble(4, employee.getSalary());
-
-        if (id == null) {
-            preparedStatement.setInt(5, employee.getDepartment_id());
-        } else {
-            preparedStatement.setInt(5, employee.getId());
-        }
-        preparedStatement.executeUpdate();
-
-        if (connection != null) {
-            connection.close();
-        }
+    public void createEmployee(Employee employee) {
+        String sql = "INSERT into employee (name, email, date, salary, department_id) VALUES(?,?,?,?,?) ";
+        jdbcTemplate = new JdbcTemplate(dataSource);
+        jdbcTemplate.update(sql, new Object[]{employee.getName(), employee.getEmail(), employee.getDate(), employee.getSalary(), employee.getDepartment_id()});
     }
 
-    private Employee fillEmpleyee(ResultSet resultSet) throws SQLException {
-        Employee employee = new Employee();
+    @Override
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public Employee readEmployeeByID(Integer id) {
 
-        employee.setId(resultSet.getInt("id"));
-        employee.setName(resultSet.getString("name"));
-        employee.setEmail(resultSet.getString("email"));
-        employee.setDate(resultSet.getDate("date"));
-        employee.setSalary(resultSet.getDouble("salary"));
-        employee.setDepartment_id(resultSet.getInt("department_id"));
+        String sql = "SELECT * From employee WHERE department_id = ?";
+        jdbcTemplate = new JdbcTemplate(dataSource);
+        Employee employee = (Employee) jdbcTemplate.queryForObject(sql, new Object[]{id}, new BeanPropertyRowMapper(Employee.class));
 
         return employee;
+    }
+
+    @Override
+    public List<Employee> readEmployees() {
+        String sql = "SELECT id, name, email, date, salary, department_id FROM employee ";
+        jdbcTemplate = new JdbcTemplate(dataSource);
+        List<Employee> employees = new ArrayList<>();
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+        for (Map row : rows) {
+            Employee employee = new Employee();
+            employee.setId(Utils.parseStringToInteger(String.valueOf(row.get("id"))));
+            employee.setName((String) row.get("name"));
+            employee.setEmail((String) row.get("email"));
+            employee.setDate(Utils.parseStringToDate((String) row.get("date")));
+            employee.setSalary(Utils.parseStringToDouble((String) row.get("salary")));
+            employee.setDepartment_id(Utils.parseStringToInteger((String) row.get("department_id")));
+            employees.add(employee);
+        }
+
+        return null;
+    }
+
+
+    @Override
+    public void updateEmployee(Employee employee) {
+        String sql = "UPDATE employee SET name = ?, email = ?, date = ?, salary = ?  WHERE id = ?";
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        Object[] objects = new Object[]{employee.getName(), employee.getEmail(), employee.getDate(), employee.getSalary(), employee.getDepartment_id()};
+        int out = jdbcTemplate.update(sql, objects);
+    }
+
+    @Override
+    public void deleteEmployee(Integer id) {
+        String sql = "DELETE FROM employee WHERE id = ? ";
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        jdbcTemplate.update(sql);
+    }
+
+    @Override
+    public List<Employee> readEmployeeByIDDepartment(Integer id) {
+        return null;
+    }
+
+    @Override
+    public boolean checkEmail(String email, Integer id) {
+        return false;
+    }
+
+    @Override
+    public void createOrUpdateEmployee(Employee employee) {
+
     }
 }

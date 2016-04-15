@@ -1,6 +1,11 @@
 package test.service.impl;
 
-import test.dao.DaoFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import test.dao.DepartmentDAO;
 import test.dao.EmployeeDAO;
 import test.dao.impl.EmployeeDAOImpl;
@@ -17,15 +22,17 @@ import java.util.Map;
 /**
  * Created on 04.04.16.
  */
-public class DepartmentServiceImpl implements DepartmentService {
+@Component
+@Service("DepartmentService")
+@Transactional
+public class DepartmentServiceImpl implements DepartmentService, ApplicationContextAware {
 
     private MyValidation myValidation = new MyValidation();
-    private DepartmentDAO departmentDAO = DaoFactory.getDepartmentDAO();
+    private static DepartmentDAO departmentDAO;
     private EmployeeDAO employeeDAO = new EmployeeDAOImpl();
 
     @Override
     public void create(Department department) throws ValidationException, SQLException {
-
         Map<String, String> errors = myValidation.validation(department);
         if (errors.size() > 0) {
             throw new ValidationException(errors);
@@ -50,7 +57,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public void delete(Integer id) throws  SQLException {
+    public void delete(Integer id) throws SQLException {
 
         List<Employee> employees = employeeDAO.readEmployeeByIDDepartment(id);
         if (!employees.isEmpty()) {
@@ -64,6 +71,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Department> getAll() throws SQLException {
         return departmentDAO.readDepartments();
     }
@@ -76,5 +84,10 @@ public class DepartmentServiceImpl implements DepartmentService {
             throw new ValidationException(errors);
         }
         departmentDAO.createOrUpdateDepartment(department);
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        departmentDAO = applicationContext.getBean(DepartmentDAO.class);
     }
 }

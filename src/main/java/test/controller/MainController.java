@@ -1,5 +1,7 @@
 package test.controller;
 
+import org.springframework.stereotype.Component;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +11,7 @@ import java.io.IOException;
 /**
  * Created on 04.04.16.
  */
+ @Component(value = "MainController")
 public class MainController extends HttpServlet {
 
     private ControllerFactory controllerFactory = new ControllerFactory();

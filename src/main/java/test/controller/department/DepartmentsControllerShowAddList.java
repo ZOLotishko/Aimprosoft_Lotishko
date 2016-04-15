@@ -1,5 +1,6 @@
 package test.controller.department;
 
+import org.springframework.stereotype.Component;
 import test.controller.InternalController;
 import test.entity.Department;
 import test.service.DepartmentService;
@@ -15,6 +16,7 @@ import java.sql.SQLException;
 /**
  * Created on 07.04.16.
  */
+@Component("/addDepartment")
 public class DepartmentsControllerShowAddList implements InternalController {
 
     private DepartmentService departmentService = new DepartmentServiceImpl();

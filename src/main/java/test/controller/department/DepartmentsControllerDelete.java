@@ -1,5 +1,6 @@
 package test.controller.department;
 
+import org.springframework.stereotype.Component;
 import test.controller.InternalController;
 import test.service.DepartmentService;
 import test.service.impl.DepartmentServiceImpl;
@@ -13,12 +14,13 @@ import java.io.IOException;
 /**
  * Created on 05.04.16.
  */
+@Component("/deleteDepartment")
 public class DepartmentsControllerDelete implements InternalController {
 
     private DepartmentService departmentService = new DepartmentServiceImpl();
 
     @Override
-    public void executor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    public void executor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Integer action = Utils.parseStringToInteger(request.getParameter("department_id"));
 
         try {

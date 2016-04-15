@@ -1,5 +1,6 @@
 package test.controller.employee;
 
+import org.springframework.stereotype.Component;
 import test.controller.InternalController;
 import test.service.EmployeeService;
 import test.service.impl.EmployeeServiceImpl;
@@ -14,6 +15,7 @@ import java.sql.SQLException;
 /**
  * Created by Sveta on 11.04.2016.
  */
+@Component("/deleteEmployee")
 public class EmployeeControllerDelete implements InternalController {
 
     private EmployeeService employeeService = new EmployeeServiceImpl();

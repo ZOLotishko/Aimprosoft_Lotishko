@@ -1,5 +1,6 @@
 package test.controller.employee;
 
+import org.springframework.stereotype.Component;
 import test.controller.InternalController;
 import test.entity.Employee;
 import test.exeption.ValidationException;
@@ -16,6 +17,7 @@ import java.sql.SQLException;
 /**
  * Created on 06.04.16.
  */
+@Component("/addEmployees")
 public class EmployeeControllerAdd implements InternalController {
 
     private EmployeeService employeeService = new EmployeeServiceImpl();

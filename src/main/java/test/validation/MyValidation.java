@@ -21,7 +21,7 @@ public class MyValidation {
 
     public Map<String, String> validation(Object object){
         Map<String,String> error = new HashMap<>();
-        if (object != 0 || object != null) {
+        if (object != 0 ) {
             List<ConstraintViolation> violations = validator.validate(object);
             if (violations.size() > 0) {
                 for (ConstraintViolation constraintViolation : violations) {
